@@ -59,20 +59,6 @@ namespace sapphire {
         append(ptr);
     }
 
-    char& String::at(std::size_t index) {
-        if (index >= m_length) {
-            throw std::out_of_range("Code 300: String index is out of bounds!");
-        }
-        return m_array[index];
-    }
-
-    const char& String::at(std::size_t index) const {
-        if (index >= m_length) {
-            throw std::out_of_range("Code 301: String index is out of bounds!");
-        }
-        return m_array[index];
-    }
-
     void String::append(const char* ptr) {
         if (ptr == nullptr) {
             return;
@@ -92,6 +78,65 @@ namespace sapphire {
             resize();
         }
         m_array[m_length] = '\0';
+    }
+
+    void String::push_back(const char c) {
+        if (m_length + 1 >= m_capacity) {
+            resize();
+        }
+        m_array[m_length] = c;
+        ++m_length;
+        m_array[m_length] = '\0';
+    }
+
+    void String::pop_back() {
+        if (is_empty()) {
+            throw std::out_of_range("String::pop_back(): String is empty!");
+        }
+        --m_length;
+        m_array[m_length] = '\0';
+    }
+
+    char& String::at(std::size_t index) {
+        if (index >= m_length) {
+            throw std::out_of_range("String::at(): String index is out of bounds!");
+        }
+        return m_array[index];
+    }
+
+    const char& String::at(std::size_t index) const {
+        if (index >= m_length) {
+            throw std::out_of_range("String::at(): String index is out of bounds!");
+        }
+        return m_array[index];
+    }
+
+    char& String::front() {
+        if (is_empty()) {
+            throw std::out_of_range("String::front(): String is empty!");
+        }
+        return m_array[0];
+    }
+
+    const char& String::front() const {
+        if (is_empty()) {
+            throw std::out_of_range("String::front(): String is empty!");
+        }
+        return m_array[0];
+    }
+
+    char& String::back() {
+        if (is_empty()) {
+            throw std::out_of_range("String::back(): String is empty!");
+        }
+        return m_array[m_length - 1];
+    }
+
+    const char& String::back() const {
+        if (is_empty()) {
+            throw std::out_of_range("String::back(): String is empty!");
+        }
+        return m_array[m_length - 1];
     }
 
     void String::clear() {

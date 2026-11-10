@@ -25,9 +25,15 @@ namespace sapphire {
         const char& operator[](std::size_t index) const;
         
         void assign(const char* ptr);
+        void append(const char* ptr);
+        void push_back(char c);
+        void pop_back();
         char& at(std::size_t index);
         const char& at(std::size_t index) const;
-        void append(const char* ptr);
+        char& front();
+        const char& front() const;
+        char& back();
+        const char& back() const;
         void clear();
         void copy(const String& other);
         bool is_empty() const { return m_length == 0; }
