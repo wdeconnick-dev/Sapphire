@@ -91,7 +91,7 @@ namespace sapphire {
 
     void String::pop_back() {
         if (is_empty()) {
-            throw std::out_of_range("String::pop_back(): String is empty!");
+            throw std::out_of_range("sapphire::String::pop_back(): String is empty!");
         }
         --m_length;
         m_array[m_length] = '\0';
@@ -99,42 +99,42 @@ namespace sapphire {
 
     char& String::at(std::size_t index) {
         if (index >= m_length) {
-            throw std::out_of_range("String::at(): String index is out of bounds!");
+            throw std::out_of_range("sapphire::String::at(): String index is out of bounds!");
         }
         return m_array[index];
     }
 
     const char& String::at(std::size_t index) const {
         if (index >= m_length) {
-            throw std::out_of_range("String::at(): String index is out of bounds!");
+            throw std::out_of_range("sapphire::String::at(): String index is out of bounds!");
         }
         return m_array[index];
     }
 
     char& String::front() {
         if (is_empty()) {
-            throw std::out_of_range("String::front(): String is empty!");
+            throw std::out_of_range("sapphire::String::front(): String is empty!");
         }
         return m_array[0];
     }
 
     const char& String::front() const {
         if (is_empty()) {
-            throw std::out_of_range("String::front(): String is empty!");
+            throw std::out_of_range("sapphire::String::front(): String is empty!");
         }
         return m_array[0];
     }
 
     char& String::back() {
         if (is_empty()) {
-            throw std::out_of_range("String::back(): String is empty!");
+            throw std::out_of_range("sapphire::String::back(): String is empty!");
         }
         return m_array[m_length - 1];
     }
 
     const char& String::back() const {
         if (is_empty()) {
-            throw std::out_of_range("String::back(): String is empty!");
+            throw std::out_of_range("sapphire::String::back(): String is empty!");
         }
         return m_array[m_length - 1];
     }
