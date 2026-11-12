@@ -114,6 +114,20 @@ namespace sapphire {
         return ans;
     }
 
+    void get_identifier(String& identifier, const String& source, std::size_t& index) {
+        if (index >= source.length()) {
+            throw std::out_of_range("sapphire::get_identifier(): Index is out of bounds!");
+        }
+        if (!is_alpha(source[index]) && !is_underscore(source[index])) {
+            throw std::invalid_argument("sapphire::get_identifier(): Identifiers cannot begin with a digit!");
+        }
+        identifier.clear();
+        while (index < source.length() && (is_alpha(source[index]) || is_digit(source[index]) || is_underscore(source[index]))) {
+            identifier.push_back(source[index]);
+            ++index;
+        }
+    }
+
     void get_number(String& digits, const String& source, std::size_t& index, number_type_t& number_type) {
         digits.clear();
         number_type = number_type_t::UNSIGNED_INTEGER_TYPE;
@@ -166,5 +180,9 @@ namespace sapphire {
             default:
                 return false;
         }
+    }
+
+    bool is_underscore(const char c) {
+        return c == '_';
     }
 }

@@ -36,6 +36,7 @@ namespace sapphire {
     std::int64_t chars_to_int(const String& digits);
 
     // Extraction functions
+    void get_identifier(String& identifier, const String& source, std::size_t& index);
     void get_number(String& digits, const String& source, std::size_t& index, number_type_t& number_type);
 
     // Verification functions
@@ -43,6 +44,7 @@ namespace sapphire {
     bool is_decimal_point(char c);
     bool is_digit(char c);
     bool is_operator(char c);
+    bool is_underscore(char c);
 }
 
 #endif // end UTILITY_HPP
