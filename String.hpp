@@ -36,6 +36,8 @@ namespace sapphire {
         const char& back() const;
         void clear();
         void copy(const String& other);
+        void to_upper_case();
+        void to_lower_case();
         bool is_empty() const { return m_length == 0; }
         std::size_t length() const { return m_length; }
         
@@ -46,6 +48,9 @@ namespace sapphire {
         
         void resize();
     };
+
+    bool operator==(const String& lhs, const String& rhs);
+    bool operator!=(const String& lhs, const String& rhs);
 }
 
 #endif // end STRING_HPP

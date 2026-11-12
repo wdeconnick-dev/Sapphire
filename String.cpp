@@ -150,6 +150,22 @@ namespace sapphire {
         assign(other.m_array);
     }
 
+    void String::to_upper_case() {
+        for (std::size_t i{0}; i < m_length; ++i) {
+            if (m_array[i] >= 'a' && m_array[i] <= 'z') {
+                m_array[i] -= ('a' - 'A');
+            }
+        }
+    }
+
+    void String::to_lower_case() {
+        for (std::size_t i{0}; i < m_length; ++i) {
+            if (m_array[i] >= 'A' && m_array[i] <= 'Z') {
+                m_array[i] += ('a' - 'A');
+            }
+        }
+    }
+
     void String::resize() {
         char* arr{new char[m_capacity * 2]};
         for (std::size_t i{0}; i < m_capacity; ++i) {
@@ -158,5 +174,21 @@ namespace sapphire {
         delete[] m_array;
         m_array = arr;
         m_capacity = m_capacity * 2;
+    }
+
+    bool operator==(const String& lhs, const String& rhs) {
+        if (lhs.length() != rhs.length()) {
+            return false;
+        }
+        for (std::size_t i{0}; i < lhs.length(); ++i) {
+            if (lhs[i] != rhs[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool operator!=(const String& lhs, const String& rhs) {
+        return !(lhs == rhs);
     }
 }
