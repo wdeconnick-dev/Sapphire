@@ -11,10 +11,11 @@ Sapphire is designed as an architectural exploration into custom language design
 * **`sapphire::Queue<T>`**: A production-grade doubly-linked template queue engineered for sequential FIFO processing.
 * **`sapphire::token`**: A production-grade unified compiler token framework utilizing a memory-shared numeric `union` and dynamic `String` lexemes.
 * **`sapphire::utility`**: A low-level stream I/O and numeric conversion suite featuring dynamic input/output routines, overflow-checked integer parsing (`chars_to_int`), floating-point parsing (`chars_to_float`), and character classification helpers.
+* **`sapphire::Lexer`**: A deterministic lexical analyzer that scans raw source text into a FIFO queue of typed `Token` objects, featuring line-number tracking, reserved keyword resolution, numeric literal parsing, and single-character lookahead for multi-character operators.
 
 ## 🗺️ Project Roadmap
 - [X] Memory-Safe Core Containers (String, Stack, Queue)
 - [X] Low-Level Character Stream & Numeric Conversion Utilities
-- [ ] Lexical Analysis (Tokenizer Engine)
+- [X] Lexical Analysis (Tokenizer Engine)
 - [ ] Abstract Syntax Tree (AST) Parsing
 - [ ] Runtime Execution Engine
