@@ -149,6 +149,47 @@ namespace sapphire {
             number_type = number_type_t::FLOAT_TYPE;
         }
     }
+    
+    void get_operator(String& operators, const String& source, std::size_t& index) {
+        if (index >= source.length()) {
+            throw std::out_of_range("sapphire::get_operator(): Index is out of bounds!");
+        }
+        if (!is_operator(source[index])) {
+            throw std::invalid_argument("sapphire::get_operator(): Invalid argument. An operator was expected!");
+        }
+        operators.clear();
+        operators.push_back(source[index]);
+        ++index;
+        if (index >= source.length()) {
+            return;
+        }
+        if (operators.back() == '/' && source[index] == '/') {
+            operators.push_back(source[index]);
+            ++index;
+        } else if (operators.back() == '<' && source[index] == '=') {
+            operators.push_back(source[index]);
+            ++index;
+        } else if (operators.back() == '>' && source[index] == '=') {
+            operators.push_back(source[index]);
+            ++index;
+        } else if (operators.back() == '!' && source[index] == '=') {
+            operators.push_back(source[index]);
+            ++index;
+        } else if (operators.back() == '|' && source[index] == '|') {
+            operators.push_back(source[index]);
+            ++index;
+        } else if (operators.back() == '&' && source[index] == '|') {
+            operators.push_back(source[index]);
+            ++index;
+        } else if (operators.back() == '&' && source[index] == '&') {
+            operators.push_back(source[index]);
+            ++index;
+        } else if (operators.back() == '<' && source[index] == '-') {
+            operators.push_back(source[index]);
+            ++index;
+        }
+        
+    }
 
     bool is_alpha(const char c) {
         return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
@@ -160,6 +201,10 @@ namespace sapphire {
 
     bool is_digit(const char c) {
         return c >= '0' && c <= '9';
+    }
+
+    bool is_newline(const char c) {
+        return c == '\n';
     }
 
     bool is_operator(const char c) {
@@ -184,5 +229,9 @@ namespace sapphire {
 
     bool is_underscore(const char c) {
         return c == '_';
+    }
+
+    bool is_whitespace(const char c) {
+        return c == ' ' || c == '\t' || c == '\r';
     }
 }
