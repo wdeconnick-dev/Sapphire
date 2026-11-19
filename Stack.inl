@@ -57,7 +57,7 @@ namespace sapphire {
     template <typename T>
     T& Stack<T>::peek() {
         if (m_top == nullptr) {
-            throw std::runtime_error("Code 500: Stack is empty!");
+            throw std::runtime_error("sapphire::Stack::peek(): Stack is empty!");
         }
         return m_top->data;
     }
@@ -65,7 +65,7 @@ namespace sapphire {
     template <typename T>
     const T& Stack<T>::peek() const {
         if (m_top == nullptr) {
-            throw std::runtime_error("Code 501: Stack is empty!");
+            throw std::runtime_error("sapphire::Stack::peek(): Stack is empty!");
         }
         return m_top->data;
     }
@@ -73,7 +73,7 @@ namespace sapphire {
     template <typename T>
     void Stack<T>::pop() {
         if (m_top == nullptr) {
-            throw std::runtime_error("Code 502: Stack is empty!");
+            throw std::runtime_error("sapphire::Stack::pop(): Stack is empty!");
         }
         frame_t* frame{m_top};
         m_top = frame->next;

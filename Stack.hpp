@@ -41,6 +41,7 @@ namespace sapphire {
         };
         
         using frame_t = StackFrame;
+        
         frame_t* m_top;
         count_t m_frame_counter;
     };

@@ -43,7 +43,7 @@ namespace sapphire {
     template <typename T>
     void Queue<T>::de_queue() {
         if (m_head == nullptr) {
-            throw std::runtime_error("Code 602: Queue is empty!");
+            throw std::runtime_error("sapphire::Queue::de_queue(): Queue is empty!");
         }
         frame_t* frame{m_head};
         if (m_head != m_tail) {
@@ -90,7 +90,7 @@ namespace sapphire {
     template <typename T>
     T& Queue<T>::peek() {
         if (m_head == nullptr) {
-            throw std::runtime_error("Code 600: Queue is empty!");
+            throw std::runtime_error("sapphire::Queue::peek(): Queue is empty!");
         }
         return m_head->data;
     }
@@ -98,7 +98,7 @@ namespace sapphire {
     template <typename T>
     const T& Queue<T>::peek() const {
         if (m_head == nullptr) {
-            throw std::runtime_error("Code 601: Queue is empty!");
+            throw std::runtime_error("sapphire::Queue::peek(): Queue is empty!");
         }
         return m_head->data;
     }
