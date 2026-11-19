@@ -27,9 +27,11 @@ namespace sapphire {
     private:
         std::size_t m_line;
         
+        void extract_delimiter(const String& source, token_t& token, std::size_t& index);
         void extract_identifier(const String& source, token_t& token, std::size_t& index);
         void extract_number(const String& source, token_t& token, std::size_t& index);
         void extract_operator(const String& source, token_t& token, std::size_t& index);
+        void resolve_delimiter(const String& delimiters, token_t& token);
         void resolve_identifier(const String& identifier, token_t& token);
         void resolve_operator(const String& operators, token_t& token);
     };

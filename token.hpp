@@ -55,6 +55,16 @@ namespace sapphire {
         LOGICAL_XOR,
         LOGICAL_AND,
         ASSIGNMENT,
+        
+        // Delimiters
+        ARROW,
+        COLON,
+        COMMA,
+        LEFT_BRACE,
+        RIGHT_BRACE,
+        LEFT_PAREN,
+        RIGHT_PAREN,
+        SEMICOLON,
     };
 
     using type_t = Type;

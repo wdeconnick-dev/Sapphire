@@ -114,6 +114,18 @@ namespace sapphire {
         return ans;
     }
 
+    void get_delimiter(String& delimiters, const String& source, std::size_t& index) {
+        if (index >= source.length()) {
+            throw std::out_of_range("sapphire::get_delimiter(): Index is out of bounds!");
+        }
+        if (!is_delimiter(source[index])) {
+            throw std::invalid_argument("sapphire::get_delimiter(): Invalid argument. A delimiter was expected!");
+        }
+        delimiters.clear();
+        delimiters.push_back(source[index]);
+        ++index;
+    }
+
     void get_identifier(String& identifier, const String& source, std::size_t& index) {
         if (index >= source.length()) {
             throw std::out_of_range("sapphire::get_identifier(): Index is out of bounds!");
@@ -187,6 +199,9 @@ namespace sapphire {
         } else if (operators.back() == '<' && source[index] == '-') {
             operators.push_back(source[index]);
             ++index;
+        } else if (operators.back() == '-' && source[index] == '>') {
+            operators.push_back(source[index]);
+            ++index;
         }
         
     }
@@ -197,6 +212,21 @@ namespace sapphire {
 
     bool is_decimal_point(const char c) {
         return c == '.';
+    }
+
+    bool is_delimiter(const char c) {
+        switch (c) {
+            case ':': [[fallthrough]];
+            case ',': [[fallthrough]];
+            case '{': [[fallthrough]];
+            case '}': [[fallthrough]];
+            case '(': [[fallthrough]];
+            case ')': [[fallthrough]];
+            case ';':
+                return true;
+            default:
+                return false;
+        }
     }
 
     bool is_digit(const char c) {

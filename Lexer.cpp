@@ -18,7 +18,9 @@ namespace sapphire {
         if (index >= source.length()) {
             throw std::out_of_range("sapphire::Lexer::next_token(): Index is out of bounds!");
         }
-        if (is_alpha(source[index]) || is_underscore(source[index])) {
+        if (is_delimiter(source[index])) {
+            extract_delimiter(source, token, index);
+        } else if (is_alpha(source[index]) || is_underscore(source[index])) {
             extract_identifier(source, token, index);
         } else if (is_digit(source[index]) || is_decimal_point(source[index])) {
             extract_number(source, token, index);
@@ -52,6 +54,20 @@ namespace sapphire {
         eof_token.type = type_t::EOF_STREAM;
         eof_token.line_count = m_line;
         tokens.en_queue(eof_token);
+    }
+
+    void Lexer::extract_delimiter(const String& source, token_t& token, std::size_t& index) {
+        if (index >= source.length()) {
+            throw std::out_of_range("sapphire::Lexer::extract_delimiter(): Index is out of bounds!");
+        }
+        if (!is_delimiter(source[index])) {
+            throw std::invalid_argument("sapphire::Lexer::extract_delimiter(): Invalid argument. A delimiter was expected!");
+        }
+        String delimiters{};
+        get_delimiter(delimiters, source, index);
+        token.lexeme = delimiters;
+        resolve_delimiter(delimiters, token);
+        token.line_count = m_line;
     }
 
     void Lexer::extract_identifier(const String& source, token_t& token, std::size_t& index) {
@@ -103,9 +119,32 @@ namespace sapphire {
         token.line_count = m_line;
     }
 
+    void Lexer::resolve_delimiter(const String& delimiters, token_t& token) {
+        if (delimiters.is_empty()) {
+            throw std::invalid_argument("sapphire::Lexer::resolve_delimiter(): Invalid argument. A delimiter was expected!");
+        }
+        if (delimiters == ":") {
+            token.type = type_t::COLON;
+        } else if (delimiters == ",") {
+            token.type = type_t::COMMA;
+        } else if (delimiters == "{") {
+            token.type = type_t::LEFT_BRACE;
+        } else if (delimiters == "}") {
+            token.type = type_t::RIGHT_BRACE;
+        } else if (delimiters == "(") {
+            token.type = type_t::LEFT_PAREN;
+        } else if (delimiters == ")") {
+            token.type = type_t::RIGHT_PAREN;
+        } else if (delimiters == ";") {
+            token.type = type_t::SEMICOLON;
+        } else {
+            throw std::invalid_argument("sapphire::Lexer::resolve_delimiter(): Invalid argument. Delimiters not recognized!");
+        }
+    }
+
     void Lexer::resolve_identifier(const String& identifier, token_t& token) {
         if (identifier.is_empty()) {
-            throw std::invalid_argument("sapphire::Lexer::resolve_identifier(): Invalid argument. An identifier cannot be empty!");
+            throw std::invalid_argument("sapphire::Lexer::resolve_identifier(): Invalid argument. An identifier was expected!");
         }
         if (identifier == "if") {
             token.type = type_t::KEYWORD_IF;
@@ -170,6 +209,8 @@ namespace sapphire {
             token.type = type_t::LOGICAL_AND;
         } else if (operators == "<-") {
             token.type = type_t::ASSIGNMENT;
+        } else if (operators == "->") {
+            token.type = type_t::ARROW;
         } else {
             throw std::invalid_argument("sapphire::Lexer::resolve_operator(): Invalid argument. Operator sequence not recognized!");
         }
