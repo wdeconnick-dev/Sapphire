@@ -33,7 +33,8 @@ namespace sapphire {
         node_t* parse_comparison(Queue<token_t>& tokens);
         node_t* parse_additive(Queue<token_t>& tokens);
         node_t* parse_term(Queue<token_t>& tokens);
-        node_t* parse_unary(Queue<token_t>& tokens);//
+        node_t* parse_exponentiation(Queue<token_t>& tokens);
+        node_t* parse_unary(Queue<token_t>& tokens);
         node_t* parse_factor(Queue<token_t>& tokens);
     };
 }

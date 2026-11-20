@@ -150,7 +150,7 @@ namespace sapphire {
     }
 
     Parser::node_t* Parser::parse_term(Queue<token_t>& tokens) {
-        node_t* node{parse_unary(tokens)};
+        node_t* node{parse_exponentiation(tokens)};
         node_t* op_node{nullptr};
         token_t next_token{tokens.peek()};
         while (next_token.type == type_t::TIMES ||
@@ -167,8 +167,26 @@ namespace sapphire {
                 op_node = temp_op;
             }
             op_node->data = next_token;
-            op_node->leaves[1] = parse_unary(tokens);
+            op_node->leaves[1] = parse_exponentiation(tokens);
             next_token = tokens.peek();
+        }
+        if (op_node != nullptr) {
+            return op_node;
+        } else {
+            return node;
+        }
+    }
+
+    Parser::node_t* Parser::parse_exponentiation(Queue<token_t>& tokens) {
+        node_t* node{parse_unary(tokens)};
+        node_t* op_node{nullptr};
+        token_t next_token{tokens.peek()};
+        if (next_token.type == type_t::EXPONENTIATION) {
+            tokens.de_queue();
+            op_node = new node_t;
+            op_node->leaves[0] = node;
+            op_node->data = next_token;
+            op_node->leaves[1] = parse_exponentiation(tokens);
         }
         if (op_node != nullptr) {
             return op_node;
@@ -181,7 +199,8 @@ namespace sapphire {
         node_t* op_node{nullptr};
         token_t next_token{tokens.peek()};
         if (next_token.type == type_t::LOGICAL_NOT ||
-            next_token.type == type_t::MINUS) {
+            next_token.type == type_t::MINUS ||
+            next_token.type == type_t::PLUS) {
             tokens.de_queue();
             op_node = new node_t;
             op_node->data = next_token;
