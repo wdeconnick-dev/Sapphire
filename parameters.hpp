@@ -10,7 +10,7 @@
 #ifndef PARAMETERS_HPP
 #define PARAMETERS_HPP
 
-#include <cstdint>
+#include <cstddef>
 
 namespace sapphire {
     namespace limits {
