@@ -215,7 +215,10 @@ namespace sapphire {
     Parser::node_t* Parser::parse_factor(Queue<token_t>& tokens) {
         token_t token{tokens.peek()};
         node_t* node{nullptr};
-        if (token.type == type_t::LITERAL_SINT64 ||
+        if (token.type == type_t::LITERAL_CHAR   ||
+            token.type == type_t::LITERAL_SINT32 ||
+            token.type == type_t::LITERAL_UINT32 ||
+            token.type == type_t::LITERAL_SINT64 ||
             token.type == type_t::LITERAL_UINT64 ||
             token.type == type_t::LITERAL_FLOAT) { // If true, token is an integer or a float
             node = new node_t;

@@ -114,6 +114,25 @@ namespace sapphire {
         return ans;
     }
 
+    void get_character(char& c, const String& source, std::size_t& index) {
+        if (index >= source.length()) {
+            throw std::out_of_range("sapphire::get_character(): Index is out of bounds!");
+        }
+        if (!is_single_quote(source[index])) {
+            throw std::invalid_argument("sapphire::get_character(): Invalid argument. A single quote was expected!");
+        }
+        ++index;
+        if (index >= source.length()) {
+            throw std::out_of_range("sapphire::get_character(): Index is out of bounds!");
+        }
+        c = source[index];
+        ++index;
+        if (index >= source.length() || !is_single_quote(source[index])) {
+            throw std::invalid_argument("sapphire::get_character(): Invalid argument. Either a closing single quote was expected or index is out of bounds!");
+        }
+        ++index;
+    }
+
     void get_delimiter(String& delimiters, const String& source, std::size_t& index) {
         if (index >= source.length()) {
             throw std::out_of_range("sapphire::get_delimiter(): Index is out of bounds!");
@@ -255,6 +274,10 @@ namespace sapphire {
             default:
                 return false;
         }
+    }
+
+    bool is_single_quote(const char c) {
+        return c == '\'';
     }
 
     bool is_underscore(const char c) {

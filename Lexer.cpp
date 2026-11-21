@@ -26,6 +26,8 @@ namespace sapphire {
             extract_number(source, token, index);
         } else if (is_operator(source[index])) {
             extract_operator(source, token, index);
+        } else if (is_single_quote(source[index])) {
+            extract_character(source, token, index);
         } else {
             throw std::invalid_argument("sapphire::Lexer::next_token(): Invalid input!");
         }
@@ -54,6 +56,21 @@ namespace sapphire {
         eof_token.type = type_t::EOF_STREAM;
         eof_token.line_count = m_line;
         tokens.en_queue(eof_token);
+    }
+
+    void Lexer::extract_character(const String& source, token_t& token, std::size_t& index) {
+        if (index >= source.length()) {
+            throw std::out_of_range("sapphire::Lexer::extract_character(): Index is out of bounds!");
+        }
+        if (!is_single_quote(source[index])) {
+            throw std::invalid_argument("sapphire::Lexer::extract_character(): Invalid argument. A single quote was expected!");
+        }
+        char c;
+        get_character(c, source, index);
+        token.type = type_t::LITERAL_CHAR;
+        token.value.char_val = c;
+        token.lexeme.push_back(c);
+        token.line_count = m_line;
     }
 
     void Lexer::extract_delimiter(const String& source, token_t& token, std::size_t& index) {
@@ -156,12 +173,18 @@ namespace sapphire {
             token.type = type_t::KEYWORD_LOOP;
         } else if (identifier == "subr") {
             token.type = type_t::KEYWORD_SUBR;
-        } else if (identifier == "var_sint64") {
-            token.type = type_t::KEYWORD_VAR_SINT64;
-        } else if (identifier == "var_uint64") {
-            token.type = type_t::KEYWORD_VAR_UINT64;
-        } else if (identifier == "var_float") {
-            token.type = type_t::KEYWORD_VAR_FLOAT;
+        } else if (identifier == "char") {
+            token.type = type_t::KEYWORD_CHAR;
+        } else if (identifier == "sint32") {
+            token.type = type_t::KEYWORD_SINT32;
+        } else if (identifier == "uint32") {
+            token.type = type_t::KEYWORD_UINT32;
+        } else if (identifier == "sint64") {
+            token.type = type_t::KEYWORD_SINT64;
+        } else if (identifier == "uint64") {
+            token.type = type_t::KEYWORD_UINT64;
+        } else if (identifier == "float") {
+            token.type = type_t::KEYWORD_FLOAT;
         } else if (identifier == "return") {
             token.type = type_t::KEYWORD_RETURN;
         } else {

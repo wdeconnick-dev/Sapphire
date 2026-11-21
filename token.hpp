@@ -26,12 +26,18 @@ namespace sapphire {
         KEYWORD_ELSE,
         KEYWORD_LOOP,
         KEYWORD_SUBR,
-        KEYWORD_VAR_SINT64,
-        KEYWORD_VAR_UINT64,
-        KEYWORD_VAR_FLOAT,
+        KEYWORD_CHAR,
+        KEYWORD_SINT32,
+        KEYWORD_UINT32,
+        KEYWORD_SINT64,
+        KEYWORD_UINT64,
+        KEYWORD_FLOAT,
         KEYWORD_RETURN,
         
         // Literals
+        LITERAL_CHAR,
+        LITERAL_SINT32,
+        LITERAL_UINT32,
         LITERAL_SINT64,
         LITERAL_UINT64,
         LITERAL_FLOAT,
@@ -70,6 +76,9 @@ namespace sapphire {
     using type_t = Type;
 
     union Value {
+        char          char_val;
+        std::int32_t  sint32;
+        std::uint32_t uint32;
         std::int64_t  sint64;
         std::uint64_t uint64;
         long double   float_val;

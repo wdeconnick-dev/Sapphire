@@ -36,6 +36,7 @@ namespace sapphire {
     std::int64_t chars_to_int(const String& digits);
 
     // Extraction functions
+    void get_character(char& c, const String& source, std::size_t& index);
     void get_delimiter(String& delimiters, const String& source, std::size_t& index);
     void get_identifier(String& identifier, const String& source, std::size_t& index);
     void get_number(String& digits, const String& source, std::size_t& index, number_type_t& number_type);
@@ -48,6 +49,7 @@ namespace sapphire {
     bool is_digit(char c);
     bool is_newline(char c);
     bool is_operator(char c);
+    bool is_single_quote(char c);
     bool is_underscore(char c);
     bool is_whitespace(char c);
 }
